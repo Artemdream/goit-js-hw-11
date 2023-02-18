@@ -7,22 +7,25 @@
     <link rel="stylesheet" href="./sass/index.scss" />
   </head>
   <body>
-    <form class="search-form" id="search-form">
-      <div class="container-form">
-        <input
-          class="input-form"
-          type="text"
-          name="searchQuery"
-          autocomplete="off"
-          placeholder="Search images..."
-        />
-        <button class="btn-search" type="submit">
-          <svg class="icon-search">
-            <use href="./icon/search.svg#icon-search"></use>
-          </svg>
-        </button>
-      </div>
-    </form>
+    <div class="container">
+      <form class="search-form" id="search-form">
+        <div class="container-form">
+          <input
+            class="input-form"
+            type="text"
+            name="searchQuery"
+            autocomplete="off"
+            placeholder="Search images..."
+          />
+          <button class="btn-search" type="submit">
+            <svg class="icon-search">
+              <use href="./icon/search.svg#icon-search"></use>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+
     <div class="gallery"></div>
     <button type="button" class="btn-load-more">Load more</button>
 
