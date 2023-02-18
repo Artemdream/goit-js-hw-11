@@ -12,54 +12,52 @@ const lightboxGallery = new SimpleLightbox('.gallery a');
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 hideBtn();
+clearCardContainet();
 
-function onSearch(e) {
+async function onSearch(e) {
   e.preventDefault();
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
   apiService.resetPage();
-
   if (!apiService.query) {
     clearCardContainet();
     hideBtn();
     return;
   }
-  apiService
-    .fetchImages()
-    .then(data => {
-      if (data.total !== 0) {
-        Notiflix.Notify.success(`Hooray! We found ${data.total} images`);
-        return data.hits;
-      }
-    })
-    .then(image => {
-      clearCardContainet();
-      renderCard(image);
-      lightboxGallery.refresh();
-      showBtn();
-    })
-    .catch(() => {
-      hideBtn();
-      Notiflix.Notify.failure(
+
+  try {
+    const { hits, totalHits } = await apiService.fetchImages();
+    if (hits.length === 0) {
+      return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-    });
+    }
+
+    Notiflix.Notify.success(`Hooray! We found ${totalHits} images`);
+
+    renderCard(hits);
+    apiService.incrementPage();
+    lightboxGallery.refresh();
+    showBtn();
+  } catch (error) {
+    console.log(error);
+    clearCardContainet();
+    hideBtn();
+  }
 }
 
-function onLoadMore() {
+async function onLoadMore() {
   hideBtn();
-
-  apiService
-    .fetchImages()
-    .then(data => {
-      setTimeout(() => {
-        showBtn();
-      }, 300);
-      return data.hits;
-    })
-    .then(image => {
-      renderCard(image);
-      lightboxGallery.refresh();
-    });
+  try {
+    const { hits } = await apiService.fetchImages();
+    renderCard(hits);
+    lightboxGallery.refresh();
+    apiService.incrementPage();
+    showBtn();
+  } catch (error) {
+    console.log(error);
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    clearCardContainet();
+  }
 }
 
 function clearCardContainet() {

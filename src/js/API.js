@@ -8,14 +8,13 @@ export default class ApiService {
     this.page = 1;
   }
 
-  fetchImages() {
+  async fetchImages() {
     const options = `&image_type=photo&orientation=horizontal&safesearch=tru&page=${this.page}&per_page=40`;
-    return axios
-      .get(`${BASE_URL}${Key}&q=${this.searchQuery}${options}`)
-      .then(({ data }) => {
-        this.page += 1;
-        return data;
-      });
+    const { data } = await axios.get(
+      `${BASE_URL}${Key}&q=${this.searchQuery}${options}`
+    );
+    console.log(data);
+    return data;
   }
 
   get query() {
@@ -24,6 +23,10 @@ export default class ApiService {
 
   set query(newQuery) {
     this.searchQuery = newQuery;
+  }
+
+  incrementPage() {
+    this.page += 1;
   }
 
   resetPage() {
