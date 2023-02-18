@@ -3,12 +3,11 @@ import ApiService from './API';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const refs = {
-  searchForm: document.getElementById('search-form'),
-  listCard: document.querySelector('.gallery'),
-  loadMoreBtn: document.querySelector('.btn-load-more'),
-};
+import { refs } from './refs';
+import { renderCard } from './renderCard';
+
 const apiService = new ApiService();
+const lightboxGallery = new SimpleLightbox('.gallery a');
 
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
@@ -35,6 +34,7 @@ function onSearch(e) {
     .then(image => {
       clearCardContainet();
       renderCard(image);
+      lightboxGallery.refresh();
       showBtn();
     })
     .catch(() => {
@@ -47,6 +47,7 @@ function onSearch(e) {
 
 function onLoadMore() {
   hideBtn();
+
   apiService
     .fetchImages()
     .then(data => {
@@ -55,44 +56,10 @@ function onLoadMore() {
       }, 300);
       return data.hits;
     })
-    .then(renderCard);
-}
-
-function renderCard(data) {
-  const markup = data
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<div class="photo-card">
-        <a class="gallery__item" href="${largeImageURL}">
-  <img class="img-card"src="${webformatURL}" alt="${tags}" loading="lazy" />
-  </a>
-  <div class="info">
-    <p class="info-item">
-      <b>Likes <span class="span-text">${likes}</span></b>
-    </p>
-    <p class="info-item">
-      <b>Views <span class="span-text">${views}</span></b>
-    </p>
-    <p class="info-item">
-      <b>Comments <span class="span-text">${comments}</span></b>
-    </p>
-    <p class="info-item">
-      <b>Downloads <span class="span-text">${downloads}</span></b>
-    </p>
-  </div>
-</div>`;
-      }
-    )
-    .join('');
-  refs.listCard.insertAdjacentHTML('beforeend', markup);
+    .then(image => {
+      renderCard(image);
+      lightboxGallery.refresh();
+    });
 }
 
 function clearCardContainet() {
@@ -106,5 +73,3 @@ function hideBtn() {
 function showBtn() {
   refs.loadMoreBtn.classList.remove('is-hidden');
 }
-
-new SimpleLightbox('.gallery a', {});
