@@ -20,7 +20,6 @@
   width: 260px;
   border: none;
   border-radius: 5px;
-  background-color: rgb(172, 240, 171);
 }
 
 .btn-search {
@@ -35,13 +34,13 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: rgb(172, 240, 171);
+  background-color: inherit;
 }
 
 .icon-search {
   width: 15px;
   height: 15px;
-  fill: rgba(49, 44, 44, 0.763);
+  fill: rgba(102, 1, 255, 0.763);
   transition: transform 250ms;
 }
 
