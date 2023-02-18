@@ -2,8 +2,12 @@
   display: flex;
   position: sticky;
   justify-content: center;
-  background-color: rgb(72, 72, 213);
   padding: 10px 0;
+  background: radial-gradient(
+    closest-side,
+    rgb(125, 121, 202) 50%,
+    rgb(154, 252, 80) 100%
+  );
 }
 
 .container-form {
@@ -16,6 +20,7 @@
   width: 260px;
   border: none;
   border-radius: 5px;
+  background-color: rgb(172, 240, 171);
 }
 
 .btn-search {
@@ -30,13 +35,17 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
+  background-color: rgb(172, 240, 171);
 }
 
 .icon-search {
   width: 15px;
   height: 15px;
-
   fill: rgba(49, 44, 44, 0.763);
+  transition: transform 250ms;
 }
 
-// --------------------- Gallery ----------------- //
+.icon-search:hover {
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1.33);
+}
