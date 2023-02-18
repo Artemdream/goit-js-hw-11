@@ -1,0 +1,42 @@
+.search-form {
+  display: flex;
+  position: sticky;
+  justify-content: center;
+  background-color: rgb(72, 72, 213);
+  padding: 10px 0;
+}
+
+.container-form {
+  position: relative;
+}
+
+.input-form {
+  padding: 5px;
+  outline: none;
+  width: 260px;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 28px;
+  height: 100%;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.icon-search {
+  width: 15px;
+  height: 15px;
+
+  fill: rgba(49, 44, 44, 0.763);
+}
+
+// --------------------- Gallery ----------------- //
