@@ -50,6 +50,7 @@
 }
 
 .photo-card {
+  transition: transform 250ms;
   width: calc((100% - 80px) / 4);
 }
 
