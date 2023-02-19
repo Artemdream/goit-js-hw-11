@@ -12,10 +12,11 @@ const lightboxGallery = new SimpleLightbox('.gallery a');
 refs.searchForm.addEventListener('submit', onSearch);
 refs.loadMoreBtn.addEventListener('click', onLoadMore);
 hideBtn();
-clearCardContainet();
 
 async function onSearch(e) {
   e.preventDefault();
+
+  clearCardContainet();
   apiService.resetPage();
 
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
@@ -38,7 +39,6 @@ async function onSearch(e) {
 
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images`);
 
-    clearCardContainet();
     renderCard(hits);
     apiService.resetPage();
     lightboxGallery.refresh();
@@ -53,10 +53,10 @@ async function onSearch(e) {
 async function onLoadMore() {
   hideBtn();
   try {
+    apiService.incrementPage();
     const { hits } = await apiService.fetchImages();
     renderCard(hits);
     lightboxGallery.refresh();
-    apiService.incrementPage();
     setTimeout(() => {
       showBtn();
     }, 300);
