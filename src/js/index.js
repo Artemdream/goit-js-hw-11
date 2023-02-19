@@ -15,12 +15,11 @@ hideBtn();
 
 async function onSearch(e) {
   e.preventDefault();
-
-  clearCardContainet();
   apiService.resetPage();
 
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
 
+  clearCardContainet();
   if (!apiService.query) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -32,6 +31,7 @@ async function onSearch(e) {
   try {
     const { hits, totalHits } = await apiService.fetchImages();
     if (hits.length === 0) {
+      hideBtn();
       return Notiflix.Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
