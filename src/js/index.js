@@ -16,6 +16,7 @@ clearCardContainet();
 
 async function onSearch(e) {
   e.preventDefault();
+  apiService.resetPage();
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
   apiService.resetPage();
   if (!apiService.query) {
