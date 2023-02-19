@@ -36,7 +36,6 @@ async function onSearch(e) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images`);
 
     renderCard(hits);
-//     apiService.incrementPage();
     lightboxGallery.refresh();
     showBtn();
   } catch (error) {
