@@ -9,7 +9,7 @@ export default class ApiService {
   }
 
   async fetchImages() {
-    const options = `&image_type=photo&orientation=horizontal&safesearch=tru&page=${this.page}&per_page=40`;
+    const options = `&image_type=photo&orientation=horizontal&safesearch=tru&page=${this.page}&per_page=4`;
     const { data } = await axios.get(
       `${BASE_URL}${Key}&q=${this.searchQuery}${options}`
     );

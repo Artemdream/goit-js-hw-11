@@ -16,10 +16,14 @@ clearCardContainet();
 
 async function onSearch(e) {
   e.preventDefault();
-  apiService.query = e.currentTarget.elements.searchQuery.value.trim();
   apiService.resetPage();
+
+  apiService.query = e.currentTarget.elements.searchQuery.value.trim();
+
   if (!apiService.query) {
-    clearCardContainet();
+    Notiflix.Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
     hideBtn();
     return;
   }
@@ -34,8 +38,9 @@ async function onSearch(e) {
 
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images`);
 
+    clearCardContainet();
     renderCard(hits);
-    apiService.incrementPage();
+    apiService.resetPage();
     lightboxGallery.refresh();
     showBtn();
   } catch (error) {
@@ -52,7 +57,9 @@ async function onLoadMore() {
     renderCard(hits);
     lightboxGallery.refresh();
     apiService.incrementPage();
-    showBtn();
+    setTimeout(() => {
+      showBtn();
+    }, 300);
   } catch (error) {
     console.log(error);
     Notify.info("We're sorry, but you've reached the end of search results.");
