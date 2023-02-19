@@ -15,8 +15,6 @@ hideBtn();
 
 async function onSearch(e) {
   e.preventDefault();
-
-  clearCardContainet();
   apiService.resetPage();
 
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
@@ -28,6 +26,8 @@ async function onSearch(e) {
     hideBtn();
     return;
   }
+  
+  clearCardContainet();
 
   try {
     const { hits, totalHits } = await apiService.fetchImages();
