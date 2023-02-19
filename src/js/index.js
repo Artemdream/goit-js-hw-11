@@ -18,7 +18,7 @@ async function onSearch(e) {
   e.preventDefault();
   apiService.resetPage();
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
-  apiService.resetPage();
+
   if (!apiService.query) {
     clearCardContainet();
     hideBtn();
@@ -36,7 +36,7 @@ async function onSearch(e) {
     Notiflix.Notify.success(`Hooray! We found ${totalHits} images`);
 
     renderCard(hits);
-    apiService.incrementPage();
+//     apiService.incrementPage();
     lightboxGallery.refresh();
     showBtn();
   } catch (error) {
@@ -51,8 +51,8 @@ async function onLoadMore() {
   try {
     const { hits } = await apiService.fetchImages();
     renderCard(hits);
-    lightboxGallery.refresh();
     apiService.incrementPage();
+    lightboxGallery.refresh();
     showBtn();
   } catch (error) {
     console.log(error);
