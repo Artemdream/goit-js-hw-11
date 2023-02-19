@@ -27,6 +27,8 @@ async function onSearch(e) {
     hideBtn();
     return;
   }
+  
+  clearCardContainet();
 
   try {
     const { hits, totalHits } = await apiService.fetchImages();
