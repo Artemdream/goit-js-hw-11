@@ -10,16 +10,16 @@ const apiService = new ApiService();
 const lightboxGallery = new SimpleLightbox('.gallery a');
 
 refs.searchForm.addEventListener('submit', onSearch);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+// refs.loadMoreBtn.addEventListener('click', onLoadMore);
 hideBtn();
 
 async function onSearch(e) {
   e.preventDefault();
   apiService.resetPage();
+  clearCardContainet();
 
   apiService.query = e.currentTarget.elements.searchQuery.value.trim();
 
-  clearCardContainet();
   if (!apiService.query) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -27,8 +27,6 @@ async function onSearch(e) {
     hideBtn();
     return;
   }
-  
-  clearCardContainet();
 
   try {
     const { hits, totalHits } = await apiService.fetchImages();
@@ -52,21 +50,60 @@ async function onSearch(e) {
   }
 }
 
-async function onLoadMore() {
-  hideBtn();
-  try {
-    apiService.incrementPage();
-    const { hits } = await apiService.fetchImages();
-    renderCard(hits);
-    lightboxGallery.refresh();
-    setTimeout(() => {
-      showBtn();
-    }, 300);
-  } catch (error) {
-    console.log(error);
-    Notify.info("We're sorry, but you've reached the end of search results.");
-    clearCardContainet();
-  }
+// async function onLoadMore() {
+//   hideBtn();
+//   try {
+//     apiService.incrementPage();
+//     const { hits } = await apiService.fetchImages();
+//     renderCard(hits);
+//     lightboxGallery.refresh();
+//     setTimeout(() => {
+//       showBtn();
+//     }, 300);
+//   } catch (error) {
+//     console.log(error);
+//     Notify.info("We're sorry, but you've reached the end of search results.");
+//     clearCardContainet();
+//   }
+// }
+
+async function onEntry(entries) {
+  entries.forEach(async entry => {
+    try {
+      if (
+        entry.isIntersecting &&
+        apiService.query !== '' &&
+        refs.gallery.ChildElementCount !== 0
+      ) {
+        apiService.incrementPage();
+        const { hits } = await apiService.fetchImages();
+        renderCard(hits);
+        lightboxGallery.refresh();
+        smoothScroll();
+        hideBtn();
+      }
+    } catch (error) {
+      Notify.info("We're sorry, but you've reached the end of search results.");
+      console.error(error);
+    }
+  });
+}
+
+const observer = new IntersectionObserver(onEntry, {
+  rootMargin: '100px',
+});
+
+observer.observe(refs.target);
+
+function smoothScroll() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
 }
 
 function clearCardContainet() {
