@@ -10,7 +10,7 @@ const apiService = new ApiService();
 const lightboxGallery = new SimpleLightbox('.gallery a');
 
 refs.searchForm.addEventListener('submit', onSearch);
-// refs.loadMoreBtn.addEventListener('click', onLoadMore);
+refs.loadMoreBtn.addEventListener('click', onLoadMore);
 hideBtn();
 
 async function onSearch(e) {
@@ -50,31 +50,27 @@ async function onSearch(e) {
   }
 }
 
-// async function onLoadMore() {
-//   hideBtn();
-//   try {
-//     apiService.incrementPage();
-//     const { hits } = await apiService.fetchImages();
-//     renderCard(hits);
-//     lightboxGallery.refresh();
-//     setTimeout(() => {
-//       showBtn();
-//     }, 300);
-//   } catch (error) {
-//     console.log(error);
-//     Notify.info("We're sorry, but you've reached the end of search results.");
-//     clearCardContainet();
-//   }
-// }
+async function onLoadMore() {
+  hideBtn();
+  try {
+    apiService.incrementPage();
+    const { hits } = await apiService.fetchImages();
+    renderCard(hits);
+    lightboxGallery.refresh();
+    setTimeout(() => {
+      showBtn();
+    }, 300);
+  } catch (error) {
+    console.log(error);
+    Notify.info("We're sorry, but you've reached the end of search results.");
+    clearCardContainet();
+  }
+}
 
 async function onEntry(entries) {
   entries.forEach(async entry => {
     try {
-      if (
-        entry.isIntersecting &&
-        apiService.query !== '' &&
-        refs.gallery.ChildElementCount !== 0
-      ) {
+      if (entry.isIntersecting && apiService.query !== '') {
         apiService.incrementPage();
         const { hits } = await apiService.fetchImages();
         renderCard(hits);
@@ -83,7 +79,9 @@ async function onEntry(entries) {
         hideBtn();
       }
     } catch (error) {
-      Notify.info("We're sorry, but you've reached the end of search results.");
+      Notiflix.Notify.info(
+        "We're sorry, but you've reached the end of search results."
+      );
       console.error(error);
     }
   });
