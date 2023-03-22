@@ -1,6 +1,5 @@
 import axios from 'axios';
 const BASE_URL = `https://pixabay.com/api/?`;
-// const Key = 'key=33610632-7e8c2f7a73fdbb86134be2184';
 
 export default class ApiService {
   constructor() {
@@ -19,6 +18,7 @@ export default class ApiService {
       per_page: 40,
     });
     const { data } = await axios.get(`${BASE_URL}${options}`);
+    console.log(data);
     return data;
   }
 

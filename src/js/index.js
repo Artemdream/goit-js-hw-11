@@ -30,6 +30,7 @@ async function onSearch(e) {
 
   try {
     const { hits, totalHits } = await apiService.fetchImages();
+    console.log(hits);
     if (hits.length === 0) {
       hideBtn();
       return Notiflix.Notify.failure(
