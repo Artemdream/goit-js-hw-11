@@ -8,7 +8,7 @@
 
 .photo-card {
   transition: transform 250ms;
-  width: calc((100% - 80px) / 4);
+  flex-basis: calc((100% - 80px) / 4);
   box-shadow: 5px 5px 5px rgb(206, 194, 194);
   border-radius: 10px;
 }
@@ -34,6 +34,7 @@
   border-top: none;
   justify-content: center;
   background-color: #d5f6d4;
+  padding: 10px;
 }
 
 .info-item {
