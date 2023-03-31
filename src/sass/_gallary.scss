@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  flex-basic: calc((100% - 60px) / 4);
+  flex-basic: calc((100% - 80px) / 4);
   transition: transform 250ms;  
   box-shadow: 5px 5px 5px rgb(206, 194, 194);
   border-radius: 10px;
@@ -30,7 +30,7 @@
 
 .info {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   padding: 15px;
   border: 1px solid #eee;
   border-bottom-left-radius: 5px;
