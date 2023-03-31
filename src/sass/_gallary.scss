@@ -7,9 +7,11 @@
 }
 
 .photo-card {
-  display:flex;
-  transition: transform 250ms;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   flex-basic: calc((100% - 60px) / 4);
+  transition: transform 250ms;  
   box-shadow: 5px 5px 5px rgb(206, 194, 194);
   border-radius: 10px;
 }
