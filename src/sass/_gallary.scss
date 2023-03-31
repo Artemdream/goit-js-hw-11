@@ -7,6 +7,7 @@
 }
 
 .photo-card {
+  display:flex;
   transition: transform 250ms;
   flex-basic: calc((100% - 60px) / 4);
   box-shadow: 5px 5px 5px rgb(206, 194, 194);
